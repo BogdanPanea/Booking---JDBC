@@ -94,13 +94,20 @@ public class InsertSelectPrintTest {
     private void insertTestData(List<String> insertedObjectList) throws BookingDbException, SQLException {
         SQLAccomodationDAO sqlAccomodationDAO = new SQLAccomodationDAO(db);
         Accomodation accomodation1 = new Accomodation();
+        Accomodation accomodation2 = new Accomodation();
 
         accomodation1.setType("Double room");
         accomodation1.setBedType("King size");
         accomodation1.setMaxGuests(2);
         accomodation1.setDescription("Only for those with money.");
 
+        accomodation2.setType("Double room");
+        accomodation2.setBedType("King size");
+        accomodation2.setMaxGuests(2);
+        accomodation2.setDescription("Only for those with money.");
+
         sqlAccomodationDAO.add(accomodation1);
+        sqlAccomodationDAO.add(accomodation2);
         insertedObjectList.add(accomodation1.toString());
 
 
@@ -133,7 +140,7 @@ public class InsertSelectPrintTest {
         accomodationFairRelation2.setIdAccomodation(sqlAccomodationDAO.getByAccomodationId(accomodation1).getId());
         accomodationFairRelation2.setIdRoomFair(sqlRoomFairDAO.getByRoomFairId(roomFair2).getId());
 
-        accomodationFairRelation3.setIdAccomodation(sqlAccomodationDAO.getByAccomodationId(accomodation1).getId());
+        accomodationFairRelation3.setIdAccomodation(sqlAccomodationDAO.getByAccomodationId(accomodation2).getId());
         accomodationFairRelation3.setIdRoomFair(sqlRoomFairDAO.getByRoomFairId(roomFair3).getId());
 
         sqlAccomodationFairRelationDAO.add(accomodationFairRelation1);
