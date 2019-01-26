@@ -50,7 +50,7 @@ public class SQLAccomodationFairRelationDAO implements AccomodationFairRelationD
         }
     }
 
-    private AccomodationFairRelation mapResultSetToAccomodationFairRelation(ResultSet resultSet) throws SQLException {
+    public AccomodationFairRelation mapResultSetToAccomodationFairRelation(ResultSet resultSet) throws SQLException {
         AccomodationFairRelation accomodationFairRelation = new AccomodationFairRelation();
         accomodationFairRelation.setId(resultSet.getInt("id"));
         accomodationFairRelation.setIdAccomodation(resultSet.getInt("id_accomodation"));

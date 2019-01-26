@@ -20,8 +20,8 @@ public class SQLAccomodationDAO implements AccomodationDAO {
     @Override
     public List<Accomodation> getAll() throws BookingDbException, SQLException {
         try (Connection conn = db.connect()) {
-            Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultSet = statement.executeQuery("SELECT * from accomodation;");
+            PreparedStatement  statement = conn.prepareStatement("SELECT * from accomodation;");
+            ResultSet resultSet = statement.executeQuery();
             List<Accomodation> accomodations = new ArrayList<>();
             while (resultSet.next()) {
                 Accomodation accomodation = mapResultSetToAccomodation(resultSet);
@@ -34,15 +34,16 @@ public class SQLAccomodationDAO implements AccomodationDAO {
     @Override
     public Accomodation getByAccomodationId(Accomodation  accomodation) throws BookingDbException, SQLException {
         try (Connection conn = db.connect()) {
-            Statement statement = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ResultSet resultSet = statement.executeQuery("SELECT * from accomodation WHERE id=" + accomodation.getId() + ";");
+            PreparedStatement statement = conn.prepareStatement("SELECT * from accomodation WHERE id= ? ;");
+            statement.setInt(1, accomodation.getId());
+            ResultSet resultSet = statement.executeQuery();
             resultSet.next();
 
             return mapResultSetToAccomodation(resultSet);
         }
     }
 
-    private Accomodation mapResultSetToAccomodation(ResultSet resultSet) throws SQLException {
+    public Accomodation mapResultSetToAccomodation(ResultSet resultSet) throws SQLException {
         Accomodation accomodation = new Accomodation();
         accomodation.setId(resultSet.getInt("id"));
         accomodation.setType(resultSet.getString("type"));
@@ -55,8 +56,9 @@ public class SQLAccomodationDAO implements AccomodationDAO {
     @Override
     public void delete(Accomodation accomodation) throws BookingDbException, SQLException {
         try (Connection connection = db.connect()) {
-            Statement statement = connection.createStatement();
-            statement.execute("DELETE FROM accomodation WHERE id=" + accomodation.getId() + ";");
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM accomodation WHERE id= ?;");
+            statement.setInt(1, accomodation.getId());
+            statement.executeQuery();
         }
     }
 

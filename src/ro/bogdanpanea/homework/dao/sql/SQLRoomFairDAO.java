@@ -45,7 +45,7 @@ public class SQLRoomFairDAO implements RoomFairDAO {
         }
     }
 
-    private RoomFair mapResultSetToRoomFair(ResultSet resultSet) throws SQLException {
+    public RoomFair mapResultSetToRoomFair(ResultSet resultSet) throws SQLException {
         RoomFair roomFair = new RoomFair();
         roomFair.setId(resultSet.getInt("id"));
         roomFair.setValue(resultSet.getInt("value"));
